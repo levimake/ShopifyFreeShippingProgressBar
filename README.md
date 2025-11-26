@@ -33,13 +33,13 @@ It features a striped, animated CSS gradient and updates automatically when item
 ## Place in Cart Drawer
 1. Open Snippets / cart-drawer.liquid.
 2. Find the line `{%- if cart != empty -%}`
-3. Paste {% render 'free-shipping-bar' %} above the line.
+3. Paste `{% render 'free-shipping-bar' %}` above the line.
 4. Save changes.
 
 ## Place in Cart Page
 1. Open `./sections/main-cart-items.liquid`
 2. Find the line `{%- if cart != empty -%}`
-3. Paste {% render 'free-shipping-bar' %} above the line.
+3. Paste `{% render 'free-shipping-bar' %}` above the line.
 4. Save changes.
 
 ## Configuration
