@@ -1,0 +1,124 @@
+{% comment %}
+  CONFIGURATION
+  Set your free shipping threshold in cents (e.g., 5000 = $50.00)
+{% endcomment %}
+{% assign threshold = 5000 %}
+{% assign current_total = cart.total_price %}
+{% assign percentage = current_total | times: 100.0 | divided_by: threshold %}
+
+{% if percentage > 100 %}
+  {% assign percentage = 100 %}
+{% endif %}
+
+<div 
+  id="FreeShippingBar" 
+  class="shipping-bar-container" 
+  data-threshold="{{ threshold }}"
+  data-currency-symbol="{{ cart.currency.symbol }}"
+>
+  <p class="shipping-bar-text">
+    {% if current_total >= threshold %}
+      <span class="success-text">🎉 You've unlocked <strong>Free Shipping!</strong></span>
+    {% else %}
+      {% assign remaining = threshold | minus: current_total %}
+      <span>Spend <strong>{{ remaining | money }}</strong> to reach Free Shipping!</span>
+    {% endif %}
+  </p>
+
+  <div class="shipping-bar-track">
+    <div 
+      class="shipping-bar-fill {% if current_total >= threshold %}unlocked{% endif %}" 
+      style="width: {{ percentage }}%;"
+    ></div>
+  </div>
+</div>
+
+<style>
+  .shipping-bar-container {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+  }
+  .shipping-bar-text {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  .shipping-bar-track {
+    width: 100%;
+    height: 12px;
+    background-color: #e5e7eb; /* Light Gray */
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .shipping-bar-fill {
+    height: 100%;
+    background-color: #16a34a; /* Green */
+    transition: width 0.5s ease;
+    
+    /* THE STRIPED PATTERN CSS */
+    background-image: linear-gradient(
+      45deg, 
+      rgba(255, 255, 255, 0.15) 25%, 
+      transparent 25%, 
+      transparent 50%, 
+      rgba(255, 255, 255, 0.15) 50%, 
+      rgba(255, 255, 255, 0.15) 75%, 
+      transparent 75%, 
+      transparent
+    );
+    background-size: 1rem 1rem;
+  }
+  /* Optional: Change color when unlocked */
+  .shipping-bar-fill.unlocked {
+    background-color: #15803d; /* Darker Green */
+  }
+  .success-text {
+    color: #16a34a;
+  }
+  /* Free Shipping Bar Styles */
+.shipping-bar-container {
+  width: 100%;
+  padding: 15px 0 20px 0; /* Adjusted padding */
+  text-align: center;
+}
+
+.shipping-bar-text {
+  font-size: 1.3rem; /* Matches Dawn typography */
+  margin-bottom: 10px;
+  color: rgb(var(--color-foreground));
+}
+
+.shipping-bar-track {
+  width: 100%;
+  height: 10px; /* Height of the gray track */
+  background-color: rgba(var(--color-foreground), 0.1); /* Dawn generic gray */
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.shipping-bar-fill {
+  height: 100%;
+  background-color: #16a34a; /* Green */
+  border-radius: 5px;
+  transition: width 0.3s ease-out;
+  display: block !important; /* Forces visibility */
+  
+  /* The Striped Pattern */
+  background-image: linear-gradient(
+    45deg, 
+    rgba(255, 255, 255, 0.2) 25%, 
+    transparent 25%, 
+    transparent 50%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    rgba(255, 255, 255, 0.2) 75%, 
+    transparent 75%, 
+    transparent
+  );
+  background-size: 1rem 1rem;
+}
+
+.shipping-bar-fill.unlocked {
+  background-color: #15803d; /* Darker green on success */
+}
+</style>
