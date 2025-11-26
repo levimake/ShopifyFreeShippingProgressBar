@@ -43,7 +43,7 @@ It features a striped, animated CSS gradient and updates automatically when item
 4. Save changes.
 
 ## Configuration
-Modify the file `free-shippinh-bar.liquid`
+Modify the file `free-shipping-bar.liquid`
 
 `{% comment %} Set this to your amount in CENTS {% endcomment %}
 {% assign threshold = 7500 %} `
